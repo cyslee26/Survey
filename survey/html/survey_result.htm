@@ -1,0 +1,54 @@
+<script language="JavaScript">
+function DisplaySurveyResult(survey_id, formID)
+{
+	var i = document.getElementById(formID).selectedIndex;
+	var q_id = document.getElementById(formID).options[i].value ;
+	
+	var url = "resultview.php?survey_id="+survey_id+"&question_id="+q_id;
+	
+	window.location.href=url;
+}
+</script>
+
+<table>
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+
+<tr>
+	<td colspan='2'>
+		<table>
+		<tr>
+			<td nowrap><b>Results for Questions:</b></td>
+			<td><!--QUESTION_LIST--></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+
+<tr>
+	<td  colspan='2'><!--RESULT_GRAPH--></td>
+</tr>
+
+
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+
+<tr><td colspan='2'><b><!--DOWNLOAD_LINK--></b></td></tr>
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+<tr>
+	<td colspan='2'><!--SUMMARY_RESULTS--></td>
+</tr>
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+
+<tr>
+	<td colspan='2'><!--DETAIL_RESULTS--></td>
+</tr>
+
+<tr><td colspan='2'>&nbsp;</td></tr>
+<tr><td colspan='2'><a href="index.php">Return To Survey / Quiz Index</a></td></tr>
+
+</table>

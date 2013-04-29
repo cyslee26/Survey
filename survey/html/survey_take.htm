@@ -1,0 +1,74 @@
+<script language="JavaScript">
+function SaveSurveyResult(formID, status)
+{
+	document.getElementById(formID).value = status;
+	document.survey_process.submit();
+}
+</script>
+
+<style type='text/css'>
+	body {margin:0px;font-size:11px;font-family:verdana}	
+	.red  {text-indent:5px;font-weight:bolder; font-family:verdana; color:#cc0000}	
+</style>
+
+<table width="90%">
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+
+<!--SURVEY_INTRO_TEXT-->
+
+
+<tr>
+	<td class='red'><!--SURVEY_CURR_QUESTION--></td>
+</tr>
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+
+<form name='survey_process' method='post' action='/tools/survey/resultsave.php'>
+<input type='hidden' name='survey_id' value='<!--SURVEY_ID-->' >
+<input type='hidden' name='q_id' value='<!--QUESTION_ID-->' >
+<input type='hidden' name='q_next_id' value='<!--QUESTION_NEXT_ID-->' >
+<input type='hidden' name='q_index' value='<!--QUESTION_INDEX-->' >
+<input type='hidden' name='survey_status'  id='survey_status' value='0' >
+
+<tr>
+	<td><!--SURVEY_ANSWER_LIST--></td>
+</tr>
+
+<tr>
+	<td>		
+		<table width='40%'>
+		<tr>
+			<td width='30%'>&nbsp;</td>
+			<td align='center'><!--SURVEY_SKIP_BUTTON--></td>
+			<td><!--SURVEY_SUBMIT_BUTTON--></td>
+		</tr>
+		</table>
+	</td>
+<tr>
+
+</form>
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+
+<tr>
+	<td>
+		<table class="light_gray_table">
+		<tr>
+			<td class='red'><!--SURVEY_TITLE--></td>
+		</tr>
+	
+		<tr>
+			<td><!--QUESTION_LIST--></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+
+</table>

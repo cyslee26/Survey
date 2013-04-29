@@ -1,0 +1,43 @@
+<P>
+
+<FORM ACTION="surveysave.php" METHOD="POST">
+<TABLE>
+<TR>
+	<TD VALIGN="BASELINE"><b>Survey/Quiz Name:</b></TD>
+	<TD VALIGN="BASELINE">
+		<INPUT TYPE="hidden" NAME="id" VALUE="<!--SURVEY_ID-->">
+		<INPUT TYPE="text" SIZE="50" NAME="title" VALUE="<!--SURVEY_TITLE-->">
+	</TD>
+</TR>
+
+<TR><TD COLSPAN="2">&nbsp;</TD></TR>
+
+<TR>
+	<TD VALIGN="TOP"><b>Available On Wikis:</b></TD>
+	<TD VALIGN="TOP"><!--SURVEY_AVAILABLE_LOC--></TD>
+</TR>
+
+<TR><TD COLSPAN="2">&nbsp;</TD></TR>
+<TR>
+	<TD ALIGN="BASELINE"><strong>Anonymous:</strong></TD>
+	<TD VALIGN="BASELINE"><INPUT TYPE="checkbox" VALUE="1" NAME="anonymous" <!--CH_ANONYMOUS--> ></TD>
+</TR>
+<TR>
+	<TD ALIGN="BASELINE"><strong>Locked:</strong></TD>
+	<TD VALIGN="BASELINE"><INPUT TYPE="checkbox" VALUE="1" NAME="locked" <!--CH_LOCKED--> ></TD>
+</TR>
+
+<TR>
+	<TD VALIGN="TOP"><b>Intro Text:</b></TD>
+	<TD VALIGN="TOP"><TEXTAREA NAME="intro_text" STYLE="width: 300px; height:150px"><!--SURVEY_INTRO_TEXT--></TEXTAREA></TD>
+</TR>
+
+<TR><TD COLSPAN="2">&nbsp;</TD></TR>
+
+<TR>
+	<TD COLSPAN="2" ALIGN="RIGHT"><INPUT TYPE="SUBMIT" VALUE="SUBMIT"></TD>	
+</TR>
+
+</TABLE>
+
+</FORM>

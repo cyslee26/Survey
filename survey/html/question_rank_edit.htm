@@ -1,0 +1,80 @@
+<SCRIPT LANGUAGE="JavaScript">
+function used_questions_edit() {
+	document.form1.edit_button.disabled = false;
+	document.form1.delete_button.disabled = false;
+	document.form1.new_button.disabled = false;
+}
+
+function question_delete(survey_id, formID) 
+{
+	var i = document.getElementById(formID).selectedIndex;
+	var q_id = document.getElementById(formID).options[i].value ;
+	var url = "questiondel.php?&survey_id="+survey_id+"&question_id="+q_id;
+
+	confirm_delete = confirm("Are you sure you want to delete this question?");
+	
+	if (confirm_delete==true) 
+	{
+		var w = window.open(url ,null, 'width=400,height=240,scrollbars=yes,resizable=yes')
+		w.focus();
+	} 
+}
+
+function question_edit(survey_id, formID)
+{
+	var i = document.getElementById(formID).selectedIndex;
+   var q_id = document.getElementById(formID).options[i].value ;
+	
+	var url = "questionedit.php?survey_id="+survey_id+"&question_id="+q_id;
+		
+	document.form1.action = url;
+	document.form1.submit();
+}
+
+function question_copy(survey_id, formID)
+{
+	var i = document.getElementById(formID).selectedIndex;
+   var q_id = document.getElementById(formID).options[i].value ;
+	var num_copy = document.getElementById('num_copy').value;
+
+	var url = "questioncopy.php?survey_id="+survey_id+"&question_id="+q_id+"&num_copy="+num_copy;
+		
+	document.form1.action = url;
+	document.form1.submit();
+}
+
+</SCRIPT>
+
+<P><h3>Questions:</h3>
+<P>
+<FORM NAME="form1" ID="form1" ACTION="" METHOD="POST">
+<TABLE>
+	<TR>
+		<TD VALIGN="TOP" ALIGN="CENTER">	<!--QUESTION_LIST-->	</TD>
+		<TD VALIGN="CENTER">
+			<INPUT TYPE="submit" NAME="questions_submit" VALUE="up" ><P><P>
+			<INPUT TYPE="submit" NAME="questions_submit" VALUE="down" >
+		</TD>
+	</TR>
+
+	<TR>
+		<TD ALIGN="LEFT" colspan="2">
+			<INPUT TYPE="button" NAME="new_button" VALUE="New" STYLE="background: green; color: white" onClick="window.location.href='questionedit.php?survey_id=<!--SURVEY_ID-->'">&nbsp;&nbsp;
+		
+			<INPUT TYPE="BUTTON" NAME="edit_button" VALUE="Edit" STYLE="background: blue; color: white" onClick="question_edit('<!--SURVEY_ID-->', 'question_list')">&nbsp;&nbsp;
+
+			<INPUT TYPE="BUTTON" NAME="delete_button" VALUE="Delete" STYLE="background: red; color: black" onClick="question_delete('<!--SURVEY_ID-->', 'question_list')" >&nbsp;&nbsp;&nbsp;&nbsp;
+	
+			<INPUT TYPE="BUTTON" NAME="copy_button" VALUE="Copy" STYLE="background: yellow; color: black" onClick="question_copy('<!--SURVEY_ID-->', 'question_list')" > 
+			<input type="text" name="num_copy" id="num_copy" size="4" maxlength="3" value="">  copies (** Maximum copy value is 150)
+			
+		</TD>
+	</TR>
+
+	<TR><TD COLSPAN="2">&nbsp;</TD></TR>
+
+	<TR>
+		<TD COLSPAN="2" ALIGN="CENTER"><A HREF="index.php">Return to Quiz / Survey Manager Index</A></TD>
+	</TR>
+</TABLE>
+</FORM>

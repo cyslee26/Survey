@@ -1,0 +1,30 @@
+<p>
+<form action="questionsave.php" method="post">
+<table>
+<tr>
+	<td valign="top"><b>Question:</b></td>
+	<td valign="top"><TEXTAREA name="question" style="width:300;height: 50"><!--QUESTION--></textarea>
+	                 <input TYPE="hidden" name="question_id" VALUE="<!--QUESTION_ID-->">
+						  <input TYPE="hidden" name="survey_id" VALUE="<!--SURVEY_ID-->"></td>
+</tr>
+
+<!--tr>
+	<td valign="baseline"><b>Rank:</b></td>
+	<td valign="baseline"><input TYPE="text" name="rank" VALUE="" SIZE="5"></td>
+</tr -->
+
+<tr>
+	<td valign="baseline"><b>Question Type:</b></td>
+	<td valign="baseline"><!--QUESTION_TYPE--></td>
+</tr>
+
+<tr>
+	<td valign="top"><b>Possible Answers:</b><br> <font size="-2">(separate with pipe symbols |,<br> [[[Other]]] for an open-ended<br>answer in a multiple choice question,<br> leave completely blank for open-ended)</font></td>
+	<td valign="top"><textarea name="answers" style="width: 300; height: 150"><!--ANSWER--></textarea></td>
+</tr>
+
+<tr><td colspan="2" align="right"><input TYPE="submit" name="submit" value="submit"></td></tr>
+</table>
+</form>
+</p>
+
