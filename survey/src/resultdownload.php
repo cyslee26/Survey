@@ -6,26 +6,15 @@
 // Last Modify Date:
 // Description     :	
 //------------------------------------------------------------------------------
-require_once('/mnt/about/tools/editorial/lib/Util.php');	
-require_once(LOUNGE_ROOT     . 'user.php');
-require_once(LIB_EDITORS_ROOT. 'Survey.php');
+
+require_once('../lib/User.php');
+require_once('../lib/Survey.php');
 
 //--------------------------------------
 //	Contant Variables ...
 //--------------------------------------
 define(SURVEY_DEBUG, 0);
-define(HTML, EDITORS_ROOT.'tools/survey/html/download_result.htm');
-
-//--------------------------------------
-//	User Checking ...
-//--------------------------------------
-if($permlevel != 2)
-{
-	design_top("Permission ERROR:");
-	echo '<P>You do not have permission to download survey results !! ';
-	design_bottom();
-	exit(0);
-}
+define(HTML, '../html/download_result.htm');
 
 //--------------------------------------
 //	Form Queries ...
@@ -58,7 +47,7 @@ if(($survey_id == "") || ($survey_id < 1))
 //--------------------------------------
 //	Create survey objects 
 //--------------------------------------
-$survey  = new Survey($db, SERVER_ENV);
+$survey  = new Survey($db);
 
 $ret_code = $survey->GetSurvey($survey_id, $survey_data);
 if($ret_code < 0)
@@ -94,7 +83,7 @@ if($question_id > 0)
 		exit(0);
 	}
 	
-	$csv_fname = LOG_EDITORS_ROOT."survey/csv/survey_".$survey_id."_".$question_id.".csv";
+	$csv_fname = "../download/survey_".$survey_id."_".$question_id.".csv";
 	
 	$fp = fopen($csv_fname, "w+");
 	
@@ -180,7 +169,7 @@ else // All the results
 	$num_questions = count($qid_list);
 	
 	/* csv section */
-	$csv_fname = LOG_EDITORS_ROOT."survey/csv/survey_".$survey_id."_".date('Y-m-d').".csv";
+	$csv_fname = "../download/survey_".$survey_id."_".date('Y-m-d').".csv";
 	
 	$fp = fopen($csv_fname, "w+");
 	
@@ -212,15 +201,12 @@ $fp = fopen($csv_fname, "r");
 $csv =  fread($fp, filesize($csv_fname));
 fclose($fp);
 
-
 header('Content-type: application/octet-stream');
 header("Content-disposition: attachment; filename=output.csv"); 
 header("Expires: 0"); 
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
 
 echo $csv;
-
-
 
 
 ?>

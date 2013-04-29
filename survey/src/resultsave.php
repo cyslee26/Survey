@@ -1,5 +1,9 @@
 <?php
-require_once('/mnt/about/tools/editorial/lib/Util.php');
+//-----------------------------------------------------------------------------
+//	Libraries ...
+//-----------------------------------------------------------------------------
+require_once('../lib/Survey.php');
+require_once('../lib/User.php');
 
 //-----------------------------------------------------------------------------
 //	Form Queries ...
@@ -34,8 +38,6 @@ if($isSurveyFinished == "")
 	$isSurveyFinished = 0;
 }
 
-$wiki_name = substr($_SERVER['SERVER_NAME'], 0, strpos($_SERVER['SERVER_NAME'], "."));
-
 //--------------------------------------
 //	Get User Answers
 //--------------------------------------
@@ -63,22 +65,6 @@ for ($i = 0; $i < count($fields); $i++)
 		
 		break;
 	}
-}
-
-
-//-----------------------------------------------------------------------------
-//	Libraries ...
-//-----------------------------------------------------------------------------
-require_once(EDITORS_ROOT. 'tools/lib/Survey.php');
-require_once(LOUNGE_ROOT. 'user.php');
-
-if($wiki_name === "lounge")
-{
-	require_once(LOUNGE_ROOT.'design_functions.php');
-}
-else //haven and editors' wiki
-{
-	require_once(EDITORS_ROOT.'admin/'.$wiki_name. '/design_functions.php');
 }
 
 //--------------------------------------

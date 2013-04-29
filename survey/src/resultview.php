@@ -109,7 +109,7 @@ $str_question_dropdown = $htmlform->CreateDropDownWithArray("question", $questio
 //-----------------------------------------------------------------------------
 if(($question_id > 0) && ($survey_id > 0))
 {
-	$ret_code = BuildResultsInArray($survey, $survey_id, $question_id, $summary_results, $detail_results);
+	$ret_code = SurveyViewUtil::BuildResultsInArray($survey, $survey_id, $question_id, $summary_results, $detail_results);
 	if($ret_code < 0)
 	{
 		design_top("ERROR: Quiz / Survey");
@@ -121,11 +121,11 @@ if(($question_id > 0) && ($survey_id > 0))
 
 $summary_fields = array("Answer", "Count", "Percentage");
 $showTotal      = 0;
-$str_summary_table = BuildResultsInTable($summary_results, $summary_fields, $showTotal);
+$str_summary_table = SurveyViewUtil::BuildResultsInTable($summary_results, $summary_fields, $showTotal);
 
 $detail_fields = array("username", "answer");
 $showTotal     = 1;
-$str_detail_table = BuildResultsInTable($detail_results, $detail_fields, $showTotal);
+$str_detail_table = SurveyViewUtil::BuildResultsInTable($detail_results, $detail_fields, $showTotal);
 
 //-----------------------------------------------------------------------------
 //	Clean up the object
@@ -184,153 +184,5 @@ design_bottom();
 exit();
 
 
-//-----------------------------------------------------------------------------
-//	Function Sections
-//-----------------------------------------------------------------------------
-function BuildResultsInArray($survey, $survey_id, $question_id, &$summary_results, &$detail_results)
-{
-	if(!$survey){
-		return -1;
-	}
-
-	/* Get Question Data */
-	$ret_code = $survey->GetQuestion($question_id, $question_data);
-	if($ret_code < 0)
-	{
-		return -2;
-	}
-	
-	/* parse the answers */
-	$answers = explode("|", $question_data['answers']);
-	
-	if(count($answers)== 0)
-	{
-		return 0 ;
-	}
-		
-	/* set up sort option for data */
-	$sort['field'] = "answer";
-	$sort['direction'] = "asc";
-
-	/* Get all total Results for current questions */
-	$total_results = $survey->GetResultsByQuestion($survey_id, $question_id, $detail_results, "", $sort);
-	if($total_results < 0)
-	{
-		return -3;
-	}
-	
-	for ($i = 0, $k = 0; $i < count($answers); $i++)
-	{
-		$num_results = $survey->GetResultsByQuestion($survey_id, $question_id, $results_data, $answers[$i], $sort);
-		
-		if($total_results > 0)
-		{
-			$percentage = $num_results / $total_results * 100;
-			$percentage = round($percentage, 2);
-		}
-		else
-		{
-			$percentage = 0;
-		}
-		
-		/* openend answer doesn't count in percentage */
-		if(preg_match("/\[\[\[(.*)\]\]\](.*)/i", $answers[$i], $matches))
-		{
-			$answer_text =  $matches[1]." ".$matches[2];
-			$num_results = 0;
-			$percentage = 0;
-		}
-		else
-		{
-			$answer_text = $answers[$i];
-		}
-		
-		if($num_results > 0)
-		{
-			$summary_results[$k]['Answer']     = $answer_text;
-			$summary_results[$k]['Count']      = $num_results;
-			$summary_results[$k]['Percentage'] = $percentage;	
-			$k++;
-		}
-	}
-		
-	return 0;
-}
-
-
-function BuildResultsInTable($data, $columns, $showTotal)
-{
-	$str_table = "";
-	
-	if(count($columns) < 0)
-	{
-		return "";
-	}
-
-	$str_table = '
-			<table border="0" cellpadding="5">
-				<tr class="red_header">
-				';
-	
-	/* build table header row*/
-	for($i = 0 ; $i < count($columns); $i++)
-	{
-		if($columns[$i] === 'username')
-		{
-			$col_name = "Respondent";
-		}
-		else
-		{
-			$col_name = ucfirst($columns[$i]);
-		}
-
-		$str_table .= '<td nowrap><b>'.$col_name.'</b></td>';
-	}
-
-	$str_table .= '</tr>';
-	
-	/* build rows */
-	for($i = 0; $i < count($data); $i++)
-	{
-		if($i % 2 == 1)
-		{
-			$row_color = 'dark_gray_table';
-		}
-		else
-		{
-			$row_color = 'light_gray_table';
-		}
-
-		$str_table .= '<tr class="'.$row_color.'">';
-
-		for($k = 0 ; $k < count($columns); $k++)
-		{
-			$str_table .= '<td nowrap>'.$data[$i][$columns[$k]].'</td>';
-		}	
-		
-		$str_table .= '</tr>';
-	}
-	
-    if($showTotal)
-	{
-		if(count($data) % 2 == 1)
-		{
-			$row_color = 'dark_gray_table';
-		}
-		else
-		{
-			$row_color = 'light_gray_table';
-		}
-
-		$str_table .= "<tr class='".$row_color."'>
-					<td><strong>Total Respondent</strong></td>
-					<td> <strong>".count($data)."</strong></td>
-					</tr>";
-	}
-
-	$str_table .= "</table>";
-
-	return $str_table;
-}
 
 ?>
